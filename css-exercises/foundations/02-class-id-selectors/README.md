@@ -1,0 +1,1 @@
+Created index.html and styled it with CSS using class and ID.
