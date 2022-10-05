@@ -1,20 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>JS Project - Rock Paper Scissors</title>
-</head>
-<body>
-    <h1>Rock Paper Scissors</h1>
-    <button id="Rock">Rock</button>
-    <button id='Paper'>Paper</button>
-    <button id='Scissors'>Scissors</button>
-    <br><br>
-    <div id="container"></div>
 
-    <script src="index.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://kit.fontawesome.com/15fd6e7be0.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+  <title>JS Project - The Wizard Game</title>
+</head>
+
+<body>
+
+  <header class="header">
+    <h1><i class="fa-solid fa-hat-wizard hatColor"></i> The Wizard's<span style="color: #49b675;"> DUEL</span> <i
+        class="fa-solid fa-hat-wizard hatColor"></i></h1>
+    <p>2 Wizards | 5 Rounds | 1 Winner</p>
+
+    <p>
+      <span class="fireColor"><i class="fa-solid fa-fire-flame-simple fireColor"></i> Fire</span> beats <span
+        class="airColor">Air <i class="fa-solid fa-fire-flame-curved airColor"></i></span>
+      <br />
+      <span class="airColor"><i class="fa-solid fa-fire-flame-curved airColor"></i> Air</span> beats <span
+        class="waterColor">Water <i class="fa-solid fa-droplet waterColor"></i></span>
+      <br />
+      <span class="waterColor"><i class="fa-solid fa-droplet waterColor"></i> Water</span> beats <span
+        class="fireColor">Fire <i class="fa-solid fa-fire-flame-simple fireColor"></i></span>
+    </p>
+  </header>
+
+  <main class="mainContent">
+    <div class="instDiv">
+      <p><i class="fa-solid fa-arrow-down"></i> Choose a spell! <i class="fa-solid fa-arrow-down"></i></p>
+    </div>
+    <div class="spellsContent">
+      <button class="spellButton" id="Fire">
+        <i class="fa-solid fa-fire-flame-simple spellIcon fireIcon"></i>
+      </button>
+      <button class="spellButton" id="Water">
+        <i class="fa-solid fa-droplet spellIcon waterIcon"></i>
+      </button>
+      <button class="spellButton" id="Air">
+        <i class="fa-solid fa-fire-flame-curved spellIcon airIcon"></i>
+      </button>
+    </div>
+
+    <div class="combatContent">
+      <div class="combatSpell">
+        <div class="combatItem">
+                    <p class="cSpellTitle">Your Spell</p>
+
+          <i class="fa-solid fa-spinner cIcon"></i>
+        </div>
+        <div class="VS">VS</div>
+
+        <div class="combatItem">
+          <p class="cSpellTitle">Enemy's Spell</p>
+          <i class="fa-solid fa-spinner cIcon"></i>
+        </div>
+      </div>
+      <div class="combatLog">a
+        <!--Combat Log-->
+      </div>
+
+
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Created by AlessandroPitocchi</p>
+  </footer>
+
+  <script src="index.js"></script>
 </body>
+
 </html>
