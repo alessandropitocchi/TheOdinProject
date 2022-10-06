@@ -1,77 +1,137 @@
-const buttons = document.querySelectorAll('button')
-const container = document.querySelector('#container')
-const content = document.createElement('div')
-const score= document.createElement('div')
-let cCont = 0
-let pCont = 0
+const spellButton = document.querySelectorAll('.spellButton');
+const round = document.querySelector('.rounds');
+const duelText = document.querySelector('.duelText')
+const playAgainBtn = document.querySelector('.playAgain')
 
-buttons.forEach((button) => {
-  button.addEventListener('click', playRound)
-})
+let rounds = 0;
+let pPoints = 0;
+let cPoints = 0;
 
-let compChoice = ['Rock', 'Paper', 'Scissors']
-
-function getComputerChoice() {
-    return compChoice[Math.floor(Math.random() * compChoice.length)]
+function nRound(){
+  rounds += 1;
+  round.innerText = `Round: ${rounds}`;
+  return rounds;
 }
 
-function playRound(){ 
-  const pSelection = this.id
-  const cSelection = getComputerChoice()
-  const pSel = pSelection.toLowerCase()
-  const cSel = cSelection.toLowerCase()
+function cSelection() {
+  const spells = ['Fire', 'Water', 'Leaf'];
+  const cSel = spells[Math.floor(Math.random() * spells.length)];
   
-  if(pSel == 'rock' && cSel == 'paper'){
-      message = "You Lose, Paper beats Rock!"
-      cCont++
-  } else if (pSel == 'rock' && cSel == 'scissors'){
-      message = "You Win, Rock beats Scissors!"
-      pCont++
-  } else if (pSel == 'rock' && cSel == 'rock'){
-      message = "It's a Draw!"
-  } else if (pSel == 'scissors' && cSel == 'paper'){
-      message = "You Win, Scissors beats Paper!"
-      pCont++
-  } else if (pSel == 'scissors' && cSel == 'rock'){
-      message = "You Lose, Rocks beats Scissors!"
-      cCont++
-  } else if (pSel == 'scissors' && cSel == 'scissors'){
-      message = "It's a Draw!" 
-  } else if (pSel == 'paper' && cSel == 'scissors'){
-      message = "You Lose, Scissors beats Paper!"
-      cCont++
-  } else if (pSel == 'paper' && cSel == 'rock'){
-      message = "You Win, Paper beats Rock!"
-    pCont++
-  } else if (pSel == 'paper' && cSel == 'paper'){
-      message = "It's a Draw!"
+  return cSel;
+}
+
+function gameOutput(pSel, cSel){
+  const enemyIcon = document.querySelector('.enemySpell')
+  const yourIcon = document.querySelector('.yourSpell')
+
+  enemyIcon.classList.remove('fa-spinner',  'fa-fire', 'fa-droplet', 'fa-leaf');
+  if (cSel === 'Fire') {
+    enemyIcon.classList.add('fa-fire');
+    enemyIcon.style.color = '#e71837';
+  } else if (cSel === 'Water') {
+    enemyIcon.classList.add('fa-droplet');
+    enemyIcon.style.color = '#60b5e5';
+  } else if (cSel === 'Leaf') {
+    enemyIcon.classList.add('fa-leaf');
+    enemyIcon.style.color = '#32b667';
   }
 
-  content.classList.add('content')
-  content.setAttribute('style', 'white-space: pre;')
+  yourIcon.classList.remove('fa-spinner',  'fa-fire', 'fa-droplet', 'fa-leaf');
+  if (pSel === 'Fire') {
+    yourIcon.classList.add('fa-fire');
+    yourIcon.style.color = '#e71837';
+  } else if (pSel === 'Water') {
+    yourIcon.classList.add('fa-droplet');
+    yourIcon.style.color = '#60b5e5';
+  } else if (pSel === 'Leaf') {
+    yourIcon.classList.add('fa-leaf');
+    yourIcon.style.color = '#32b667';
+  }
 
-  content.textContent = "Player: " + pSelection + "\r\n"
-  content.textContent += "Computer: "+ cSelection +" \r\n"
-  content.textContent += message
+}
 
-  score.classList.add('score')
-  score.setAttribute('style', 'white-space: pre;')
+function countPoints(pSel, cSel){
+  const duelOutput = document.querySelector('.duelSpeel');
 
-  score.textContent = "Player: " + pCont + "\r\n"
-  score.textContent += "Computer: " + cCont
+  switch(true){
+    case (pSel === cSel):
+      duelText.innerText = `${pSel} and ${cSel}, It's a draw!`;
+      break;
+    case (pSel === 'Fire' && cSel === 'Leaf'):
+    case (pSel === 'Water' && cSel === 'Fire'):
+    case (pSel === 'Leaf' && cSel === 'Water'):
+      duelText.innerText = `${pSel} beats ${cSel}, You won!`;
+      pPoints += 1;
+      break;
+    case (pSel === 'Leaf' && cSel === 'Fire'):
+    case (pSel === 'Fire' && cSel === 'Water'):
+    case (pSel === 'Water' && cSel === 'Leaf'):
+      duelText.innerText = `${cSel} beats ${pSel}, You lost!`;
+      cPoints += 1;
+      break;
+   } 
+   const result = document.querySelector('.result')
+   result.innerText = `Your points: ${pPoints} | Enemy points: ${cPoints}`
+   return [ pPoints, cPoints ]
+}
 
-  container.appendChild(content)
-  container.appendChild(score)
+function finalResult(pPoints, cPoints){
+  if( pPoints === 5 || cPoints === 5){
+    spellButton.forEach((button) =>  {
+      button.setAttribute('disabled', '');
+      button.classList.add('disabledButton', 'opacity');
+    })
 
-  console.log(pCont)
-  console.log(cCont)
-  
-  if(cCont === 5){
-    alert('Computer Wins')
-    location.reload()
-  }else if(pCont === 5){
-    alert('Player Wins')
-    location.reload();
+    const  duelResult = document.querySelector('.duelResult')
+    if (pPoints > cPoints){
+      duelText.innerText = 'Poor Enemy!';
+      duelResult.classList.add('greenColor')
+      duelResult.innerText ='Congrats! You have won this duel!'
+    } else {
+      duelText.innerText = 'Retry!';
+      duelResult.classList.add('redColor')
+      duelResult.innerText ='Retry! You have lost this duel!'
+    }
+    playAgainBtn.style.visibility = 'visible'
   }
 }
-   
+
+function resetGame() {
+  playAgainBtn.addEventListener('click', () => {
+    window.location.reload();
+  });
+}
+
+function playGame(){
+  let pSel;
+  let cSel;
+  spellButton.forEach((spell) => {
+    spell.addEventListener('click', () => {
+    const spellIcons = document.querySelectorAll('.spellIcon');
+    if(spell.classList.contains('fireButton')){
+      spellIcons[0].style.color = '#e71837';
+      spellIcons[1].style.color = 'gray';
+      spellIcons[2].style.color = 'gray';
+      pSel = 'Fire';
+    } else  if(spell.classList.contains('waterButton')){
+      spellIcons[0].style.color = 'gray';
+      spellIcons[1].style.color = '#6db1d8';
+      spellIcons[2].style.color = 'gray';
+      pSel = 'Water';
+    } else {
+      spellIcons[0].style.color = 'gray';
+      spellIcons[1].style.color = 'gray';
+      spellIcons[2].style.color = '#32b667';
+      pSel = 'Leaf';
+    }
+    cSel = cSelection();
+    nRound();
+    gameOutput(pSel, cSel)
+    countPoints(pSel, cSel);
+    finalResult(pPoints, cPoints);
+    resetGame();
+    })
+  })
+}
+
+playGame()
