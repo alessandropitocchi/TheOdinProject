@@ -1,4 +1,4 @@
-function book(title, author, pages, read){
+function Book(title, author, pages, read){
     this.title = title
     this.author = author
     this.pages = pages
@@ -8,5 +8,5 @@ function book(title, author, pages, read){
     }
 }
 
-const theHobbit = new book('The Hobbit', 'J.R.R. Tolkien', '295', 'not read')
+const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'not read')
 console.log(theHobbit.info());
